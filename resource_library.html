@@ -1,0 +1,569 @@
+<!DOCTYPE    <style>
+        :root {
+            --primary-blue: #003366;
+            --secondary-blue: #1b2735;
+            --accent-blue: #0056b3;
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --button-gradient: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--button-gradient);
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource Library | Mental Health Support System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #003366, #1b2735);
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 1.1em;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .search-bar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #003366;
+        }
+
+        .category-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .category-button {
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .category-button.active {
+            background: #003366;
+            color: white;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .resource-type {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            background: #e0e7ff;
+            color: #003366;
+        }
+
+        .resource-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .resource-title {
+            color: #003366;
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+
+        .resource-description {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .resource-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 15px;
+        }
+
+        .resource-rating {
+            color: #ffc107;
+        }
+
+        .action-button {
+            background: #003366;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+            display: inline-block;
+        }
+
+        .action-button:hover {
+            background: #004c99;
+        }
+
+        .featured-resources {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .featured-title {
+            color: #003366;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background: #e0e7ff;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #003366;
+            transition: width 0.3s ease;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .download-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .download-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .download-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: #003366;
+        }
+
+        @media (max-width: 768px) {
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            .search-bar {
+                flex-direction: column;
+            }
+            .category-filters {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="back-button">← Back to Home</a>
+        <h1>Resource Library</h1>
+        <p>Comprehensive Mental Health Resources & Learning Materials</p>
+    </header>
+
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Search resources..." onkeyup="searchResources()">
+        </div>
+
+        <div class="category-filters">
+            <button class="category-button active" onclick="filterResources('all')">All Resources</button>
+            <button class="category-button" onclick="filterResources('articles')">Articles</button>
+            <button class="category-button" onclick="filterResources('videos')">Videos</button>
+            <button class="category-button" onclick="filterResources('tools')">Tools</button>
+            <button class="category-button" onclick="filterResources('courses')">Courses</button>
+            <button class="category-button" onclick="filterResources('podcasts')">Podcasts</button>
+            <button class="category-button" onclick="filterResources('downloads')">Downloads</button>
+        </div>
+
+        <div class="featured-resources">
+            <h2 class="featured-title">Featured Resources</h2>
+            <div class="resources-grid">
+                <div class="resource-card" data-category="courses">
+                    <span class="resource-type">Course</span>
+                    <img src="https://source.unsplash.com/random/400x300?meditation" alt="Mindfulness Course" class="resource-image">
+                    <h3 class="resource-title">Mindfulness Mastery Course</h3>
+                    <p class="resource-description">A comprehensive 8-week course on mindfulness and meditation techniques.</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                    </div>
+                    <div class="resource-meta">
+                        <span>8 weeks • 24 lessons</span>
+                        <span class="resource-rating">★★★★★</span>
+                    </div>
+                    <a href="#" class="action-button" onclick="showResourceDetails('mindfulness')">Start Learning</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="resources-grid">
+            <div class="resource-card" data-category="articles">
+                <span class="resource-type">Article</span>
+                <img src="https://source.unsplash.com/random/400x300?stress" alt="Stress Management" class="resource-image">
+                <h3 class="resource-title">Effective Stress Management Techniques</h3>
+                <p class="resource-description">Learn science-backed strategies to manage academic and personal stress.</p>
+                <div class="resource-meta">
+                    <span>10 min read</span>
+                    <span class="resource-rating">★★★★☆</span>
+                </div>
+                <a href="#" class="action-button" onclick="showResourceDetails('stress')">Read Article</a>
+            </div>
+
+            <div class="resource-card" data-category="videos">
+                <span class="resource-type">Video</span>
+                <img src="https://source.unsplash.com/random/400x300?yoga" alt="Anxiety Management" class="resource-image">
+                <h3 class="resource-title">Anxiety Relief Exercises</h3>
+                <p class="resource-description">Quick and effective exercises to manage anxiety in any situation.</p>
+                <div class="resource-meta">
+                    <span>15 min video</span>
+                    <span class="resource-rating">★★★★★</span>
+                </div>
+                <a href="#" class="action-button" onclick="showResourceDetails('anxiety')">Watch Video</a>
+            </div>
+
+            <div class="resource-card" data-category="tools">
+                <span class="resource-type">Interactive Tool</span>
+                <img src="https://source.unsplash.com/random/400x300?journal" alt="Mood Journal" class="resource-image">
+                <h3 class="resource-title">Interactive Mood Journal</h3>
+                <p class="resource-description">Track your moods and identify patterns with our interactive journaling tool.</p>
+                <div class="resource-meta">
+                    <span>Daily Practice</span>
+                    <span class="resource-rating">★★★★☆</span>
+                </div>
+                <a href="#" class="action-button" onclick="showResourceDetails('journal')">Start Journaling</a>
+            </div>
+
+            <div class="resource-card" data-category="podcasts">
+                <span class="resource-type">Podcast</span>
+                <img src="https://source.unsplash.com/random/400x300?podcast" alt="Mental Health Podcast" class="resource-image">
+                <h3 class="resource-title">Student Mental Health Stories</h3>
+                <p class="resource-description">Real stories from students about their mental health journeys.</p>
+                <div class="resource-meta">
+                    <span>30 min episode</span>
+                    <span class="resource-rating">★★★★★</span>
+                </div>
+                <a href="#" class="action-button" onclick="showResourceDetails('podcast')">Listen Now</a>
+            </div>
+
+            <div class="resource-card" data-category="courses">
+                <span class="resource-type">Course</span>
+                <img src="https://source.unsplash.com/random/400x300?study" alt="Academic Success" class="resource-image">
+                <h3 class="resource-title">Academic Success & Well-being</h3>
+                <p class="resource-description">Balance academic excellence with mental well-being through practical strategies.</p>
+                <div class="resource-meta">
+                    <span>6 weeks • 18 lessons</span>
+                    <span class="resource-rating">★★★★☆</span>
+                </div>
+                <a href="#" class="action-button" onclick="showResourceDetails('academic')">Enroll Now</a>
+            </div>
+
+            <div class="resource-card" data-category="tools">
+                <span class="resource-type">Assessment Tool</span>
+                <img src="https://source.unsplash.com/random/400x300?assessment" alt="Self-Assessment" class="resource-image">
+                <h3 class="resource-title">Mental Health Self-Assessment</h3>
+                <p class="resource-description">Confidential self-assessment tool with personalized recommendations.</p>
+                <div class="resource-meta">
+                    <span>15 min assessment</span>
+                    <span class="resource-rating">★★★★★</span>
+                </div>
+                <a href="#" class="action-button" onclick="showResourceDetails('assessment')">Start Assessment</a>
+            </div>
+        </div>
+
+        <div class="download-section">
+            <h2 class="featured-title">Downloadable Resources</h2>
+            <div class="download-grid">
+                <div class="download-card">
+                    <div class="download-icon">📄</div>
+                    <h3>Stress Management Guide</h3>
+                    <p>PDF Workbook</p>
+                    <a href="#" class="action-button">Download</a>
+                </div>
+                <div class="download-card">
+                    <div class="download-icon">🎧</div>
+                    <h3>Guided Meditations</h3>
+                    <p>Audio Files (MP3)</p>
+                    <a href="#" class="action-button">Download</a>
+                </div>
+                <div class="download-card">
+                    <div class="download-icon">📱</div>
+                    <h3>Wellness Tracker</h3>
+                    <p>Mobile App</p>
+                    <a href="#" class="action-button">Download</a>
+                </div>
+                <div class="download-card">
+                    <div class="download-icon">📊</div>
+                    <h3>Progress Tracker</h3>
+                    <p>Excel Template</p>
+                    <a href="#" class="action-button">Download</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resource Details Modal -->
+    <div id="resourceModal" class="modal">
+        <div class="modal-content">
+            <h2 id="modalTitle"></h2>
+            <div id="modalContent"></div>
+            <button class="action-button" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function searchResources() {
+            const searchText = document.querySelector('.search-input').value.toLowerCase();
+            const resources = document.querySelectorAll('.resource-card');
+            
+            resources.forEach(resource => {
+                const title = resource.querySelector('.resource-title').textContent.toLowerCase();
+                const description = resource.querySelector('.resource-description').textContent.toLowerCase();
+                
+                if (title.includes(searchText) || description.includes(searchText)) {
+                    resource.style.display = 'block';
+                } else {
+                    resource.style.display = 'none';
+                }
+            });
+        }
+
+        function filterResources(category) {
+            // Update active button
+            document.querySelectorAll('.category-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Filter resources
+            const resources = document.querySelectorAll('.resource-card');
+            resources.forEach(resource => {
+                if (category === 'all' || resource.dataset.category === category) {
+                    resource.style.display = 'block';
+                } else {
+                    resource.style.display = 'none';
+                }
+            });
+        }
+
+        function showResourceDetails(resourceId) {
+            const modal = document.getElementById('resourceModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+
+            // Add content based on resource ID
+            const resourceDetails = getResourceDetails(resourceId);
+            modalTitle.textContent = resourceDetails.title;
+            modalContent.innerHTML = resourceDetails.content;
+
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('resourceModal').style.display = 'none';
+        }
+
+        function getResourceDetails(resourceId) {
+            // Resource details mapping
+            const details = {
+                mindfulness: {
+                    title: "Mindfulness Mastery Course",
+                    content: `
+                        <div style="margin-bottom: 20px;">
+                            <img src="https://source.unsplash.com/random/600x300?meditation" alt="Mindfulness Course" style="width: 100%; border-radius: 10px;">
+                        </div>
+                        <p>This comprehensive 8-week course includes:</p>
+                        <ul>
+                            <li>Daily guided meditation sessions (10-20 minutes)</li>
+                            <li>Weekly live group sessions with certified instructors</li>
+                            <li>Practical exercises for stress reduction</li>
+                            <li>Progress tracking tools and journals</li>
+                            <li>Community discussion forum</li>
+                            <li>Downloadable meditation audio files</li>
+                            <li>Certificate of completion</li>
+                        </ul>
+                        <p>Course Schedule:</p>
+                        <ul>
+                            <li>Week 1: Introduction to Mindfulness</li>
+                            <li>Week 2: Body and Breath Awareness</li>
+                            <li>Week 3: Managing Thoughts and Emotions</li>
+                            <li>Week 4: Stress Response and Relaxation</li>
+                            <li>Week 5: Mindful Communication</li>
+                            <li>Week 6: Self-Compassion</li>
+                            <li>Week 7: Mindful Living</li>
+                            <li>Week 8: Maintaining Practice</li>
+                        </ul>
+                        <p>Next cohort starts in 3 days!</p>
+                    `
+                },
+                stress: {
+                    title: "Effective Stress Management Techniques",
+                    content: `
+                        <div style="margin-bottom: 20px;">
+                            <img src="https://source.unsplash.com/random/600x300?stress-relief" alt="Stress Management" style="width: 100%; border-radius: 10px;">
+                        </div>
+                        <h3>Understanding Stress</h3>
+                        <p>Learn about the different types of stress and their impact on your mind and body.</p>
+                        
+                        <h3>Key Techniques Covered:</h3>
+                        <ul>
+                            <li>Quick stress relief techniques</li>
+                            <li>Long-term stress management strategies</li>
+                            <li>Academic stress coping mechanisms</li>
+                            <li>Time management and organization</li>
+                            <li>Breathing exercises</li>
+                        </ul>
+
+                        <h3>Practice Exercises</h3>
+                        <p>Interactive exercises and worksheets included for practical application.</p>
+                    `
+                },
+                // Add more resource details as needed
+            };
+            return details[resourceId] || { 
+                title: "Resource Details", 
+                content: "Detailed content coming soon... Please check back later!" 
+            };
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

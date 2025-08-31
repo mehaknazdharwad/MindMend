@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institutional Dashboard | Mental Health Support System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #003366;
+            --secondary-blue: #1b2735;
+            --accent-blue: #0056b3;
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --button-gradient: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: var(--text-light);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: var(--text-light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 1.1em;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .dashboard-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            color: var(--text-dark);
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .chart-container {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 20px;
+            height: 400px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-button {
+            background: none;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-button:hover,
+        .filter-button.active {
+            background: var(--primary-color);
+            color: var(--text-light);
+        }
+
+        .insight-card {
+            background: #e0e7ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .insight-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="back-button">← Back to Home</a>
+        <h1>Institutional Mental Health Dashboard</h1>
+        <p>Anonymous Trends and Analytics</p>
+    </header>
+
+    <div class="container">
+        <div class="dashboard-card" data-aos="fade-up">
+            <div class="filters">
+                <button class="filter-button active" onclick="updateTimeframe('week')">Past Week</button>
+                <button class="filter-button" onclick="updateTimeframe('month')">Past Month</button>
+                <button class="filter-button" onclick="updateTimeframe('semester')">Current Semester</button>
+                <button class="filter-button" onclick="updateTimeframe('year')">Past Year</button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">60%</div>
+                    <div class="stat-label">Students Reporting Stress During Exams</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">45%</div>
+                    <div class="stat-label">Seek Support Services</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">75%</div>
+                    <div class="stat-label">Found Resources Helpful</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3.8</div>
+                    <div class="stat-label">Average Wellness Score (out of 5)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-grid">
+            <div class="chart-container" data-aos="fade-right" data-aos-delay="200">
+                <h2>Stress Levels Throughout Semester</h2>
+                <canvas id="stressChart"></canvas>
+            </div>
+            <div class="chart-container" data-aos="fade-left" data-aos-delay="400">
+                <h2>Most Common Support Services Used</h2>
+                <canvas id="servicesChart"></canvas>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <h2>Key Insights</h2>
+            <div class="insight-card">
+                <h3>Exam Period Trends</h3>
+                <ul>
+                    <li>60% increase in stress levels during midterms and finals</li>
+                    <li>Peak usage of mental health resources 2 weeks before exams</li>
+                    <li>Most requested: Time management and anxiety management resources</li>
+                </ul>
+            </div>
+            <div class="insight-card">
+                <h3>Support Service Effectiveness</h3>
+                <ul>
+                    <li>75% of users report improved well-being after accessing resources</li>
+                    <li>Peer support groups show highest engagement rates</li>
+                    <li>Online resources accessed most frequently during late night hours</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize charts
+        function initializeCharts() {
+            // Stress Levels Chart
+            const stressCtx = document.getElementById('stressChart').getContext('2d');
+            new Chart(stressCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Midterms', 'Week 7', 'Week 8', 'Week 9', 'Finals'],
+                    datasets: [{
+                        label: 'Average Stress Level',
+                        data: [2.5, 2.8, 3.2, 3.5, 4.2, 4.8, 3.6, 3.8, 4.0, 4.9],
+                        borderColor: '#003366',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 5,
+                            title: {
+                                display: true,
+                                text: 'Stress Level (1-5)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Services Usage Chart
+            const servicesCtx = document.getElementById('servicesChart').getContext('2d');
+            new Chart(servicesCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Counseling', 'Peer Support', 'Online Resources', 'Workshops', 'Crisis Help'],
+                    datasets: [{
+                        label: 'Usage Percentage',
+                        data: [45, 65, 80, 35, 15],
+                        backgroundColor: '#003366'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Usage %'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateTimeframe(period) {
+            // Update active button
+            document.querySelectorAll('.filter-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // In a real application, this would fetch new data based on the timeframe
+            // For now, we'll just show an alert
+            alert('In a live environment, this would update the dashboard with ' + period + ' data');
+        }
+
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
+        // Initialize charts when page loads
+        document.addEventListener('DOMContentLoaded', initializeCharts);
+    </script>
+</body>
+</html>

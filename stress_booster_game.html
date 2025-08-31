@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stress Booster Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #e0f7fa;
+            padding: 50px;
+        }
+        .balloon {
+            width: 50px;
+            height: 70px;
+            background-color: #ffeb3b;
+            border-radius: 50%;
+            position: absolute;
+            cursor: pointer;
+        }
+        .start-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .start-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stress Booster Game: Pop the Balloons!</h1>
+    <div id="balloons-container"></div>
+    <p>Score: <span id="score">0</span></p>
+    <p>Time Remaining: <span id="time">30</span> seconds</p>
+    <button class="start-button" onclick="startGame()">Start Game</button>
+
+    <script>
+        let score = 0;
+        let timeRemaining = 30;
+        let gameInterval;
+        
+        function createBalloon() {
+            const balloon = document.createElement('div');
+            balloon.classList.add('balloon');
+            balloon.style.left = `${Math.random() * 90}vw`;
+            balloon.style.top = `${Math.random() * 90}vh`;
+            balloon.onclick = function() {
+                score++;
+                document.getElementById('score').innerText = score;
+                balloon.remove();
+            };
+            document.getElementById('balloons-container').appendChild(balloon);
+        }
+
+        function startGame() {
+            score = 0;
+            timeRemaining = 30;
+            document.getElementById('score').innerText = score;
+            document.getElementById('time').innerText = timeRemaining;
+
+            gameInterval = setInterval(() => {
+                if (timeRemaining > 0) {
+                    createBalloon();
+                    timeRemaining--;
+                    document.getElementById('time').innerText = timeRemaining;
+                } else {
+                    clearInterval(gameInterval);
+                    alert('Time’s up! Your final score is ' + score);
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
